@@ -30,7 +30,8 @@ class ResidualBlock(nn.Module):
         stride = 1
         res_channels = out_channels//4 ## !check
         ## Either the input and output can have same dimensions or we will have to do projection
-        if in_channels != out_channels:
+        self.projection = in_channels != out_channels
+        if self.projection:
             ## Do projection
             self.p = ConvBlock(in_channels, out_channels, 1, 2, 0)
             stride = 2

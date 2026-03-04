@@ -108,7 +108,7 @@ class ResNet(nn.Module):
                                                  out_channels = self.output_shapes[stage]))
             for _ in range(self.output_shapes[stage]-1):
                 self.blocks.append(ResidualBlock(in_channels=self.output_shapes[stage], out_channels=self.output_shapes[stage]))
-
+        self.init_weight()
 
     def forward(self, x):
         ## Input size : 224 X 224
@@ -127,4 +127,14 @@ class ResNet(nn.Module):
         x = self.relu(x)
         return x
 
+        def init_weight(self):
+            for layer in self.modules():
+                if isinstance(layer, nn.Conv2d) or isinstance(layer, nn.Linear):
+                    nn.init.kaiming_normal_(layer.weight)
 
+
+if __name__ == "__main__":
+    config_name = 50 # 50-layer
+    resnet50 = ResNet(50)
+    image = torch.rand(1, 3, 224, 224)
+    print(resnet50(image).shape)

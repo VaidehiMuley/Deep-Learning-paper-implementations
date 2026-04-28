@@ -5,3 +5,4 @@
 - [] RNN
 - [] GRU
 - [] LSTM
+- [x] Transformer
